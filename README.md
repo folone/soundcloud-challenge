@@ -40,7 +40,7 @@ the sorting.
 
 Graph search problems are very naturally solved by logic programming
 techniques. I implemented one of the possible approaches in
-Prolog (which is a language behind IBM Watson and WolframAlpha).
+Prolog (which is a language behind [IBM Watson](http://www-03.ibm.com/innovation/us/watson/) and [WolframAlpha](http://www.wolframalpha.com/)).
 Unfortunately, I don't have a big expertise in logic programming,
 only recently got interested in it, so the solution is
 a bit hacky. It is also not complete: it basically only implements the
@@ -83,4 +83,4 @@ List = [ (davidbowie, [davidbowie, omid, torsten]), (davidbowie, [davidbowie, ki
 implicit vals/typeclass instances depending on them presents us with
 most of Prolog's instruments, and the process of implicit/typeclass
 resolution is actually the famous [unification](http://en.wikipedia.org/wiki/Unification_(computer_science)) process.
-This approach is exposed in Miles Sabin's shapeless library.
+This approach is exposed in Miles Sabin's [shapeless](https://github.com/milessabin/shapeless/) library.
