@@ -1,0 +1,8 @@
+*.o
+*.hi
+*_flymake.*
+target/
+.lib/
+*~
+*#
+.#*

@@ -1,0 +1,7 @@
+brendan	kim	omid	torsten
+davidbowie	kim	mick	omid	torsten	ziggy
+kim	brendan	davidbowie	omid	torsten	ziggy
+mick	davidbowie	ziggy
+omid	brendan	davidbowie	kim	torsten	ziggy
+torsten	brendan	davidbowie	kim	omid
+ziggy	davidbowie	kim	mick	omid
