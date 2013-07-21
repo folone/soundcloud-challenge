@@ -17,7 +17,7 @@ We're using adjacency matrix, so space complexity is O(|V|²).
 
 Presented solution makes heavy use of effect control from scalaz
 library. The package object, where all the interesting stuff is going
-on, is a cake (as in http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di/).
+on, is a [cake](http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di/).
 
 To run:
 
@@ -81,5 +81,6 @@ List = [ (davidbowie, [davidbowie, omid, torsten]), (davidbowie, [davidbowie, ki
 **Funny fact:** Scala and Haskell are both logic programming languages
 ... in type system. So, having implicit vals/typeclass instances, and
 implicit vals/typeclass instances depending on them presents us with
-most of Prolog's instruments. This approach is exposed in Miles
-Sabin's shapeless library.
+most of Prolog's instruments, and the process of implicit/typeclass
+resolution is actually the famous [unification](http://en.wikipedia.org/wiki/Unification_(computer_science)) process.
+This approach is exposed in Miles Sabin's shapeless library.
