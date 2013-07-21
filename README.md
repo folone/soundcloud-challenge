@@ -11,12 +11,13 @@ This solution consists of three approaches:
 The problem is basically a depth-aware undirected graph traversal.
 After reading the data, we transform it to the adjacency matrix.
 We then perform a breadth first search through the matrix for each
-vertex. Time complexity is O(V + E). We're using adjacency matrix, so
-space complexity is O(V²).
+vertex. Time complexity of one traversal is O(|V| + |E|). Since we're
+doing a traversal for each vertex, it is O(|V|² + |E||V|).
+We're using adjacency matrix, so space complexity is O(|V|²).
 
 Presented solution makes heavy use of effect control from scalaz
 library. The package object, where all the interesting stuff is going
-on, is a cake (like this one: http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di/).
+on, is a cake (as in http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di/).
 
 To run:
 
@@ -39,7 +40,7 @@ the sorting.
 
 Graph search problems are very naturally solved by logic programming
 techniques. I implemented one of the possible approaches in
-Prolog (which is a language behind the IBM Watson and WolframAlpha).
+Prolog (which is a language behind IBM Watson and WolframAlpha).
 Unfortunately, I don't have a big expertise in logic programming,
 only recently got interested in it, so the solution is
 a bit hacky. It is also not complete: it basically only implements the
