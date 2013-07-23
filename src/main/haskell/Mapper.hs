@@ -25,20 +25,21 @@ convert xs = xs >>= convert' where
 
 processGraph :: [Edge String] → String
 processGraph edges = stringify $ M.map (verticesWithin nlevel) mapV where
-                     vertices = nub $
-                                edges >>= \x → case x of Edge a b → [a, b]
                      verticesWithin n v =
-                       let adjacent = adjacencyMatrix M.! v
+                       let findAdjacent v = edges >>= \x →
+                             case x of Edge a b | a == v    → [b]
+                                                | b == v    → [a]
+                                                | otherwise → []
+                           adjacent = adjacencyMatrix M.! v
+                           adjacencyMatrix = M.map findAdjacent mapV
                            additional =
                              if n == 1 then []
                              else adjacent >>= verticesWithin (n - 1)
                        in nub $ adjacent ++ additional
-                     adjacencyMatrix = M.map findAdjacent mapV
-                     findAdjacent v = edges >>= \x →
-                       case x of Edge a b | a == v    → [b]
-                                          | b == v    → [a]
-                                          | otherwise → []
-                     mapV = M.fromList $ map (\x → (x, x)) vertices
-                     stringify mp = unlines . M.elems $
-                                    M.mapWithKey keyShow mp
-                     keyShow key val = key ++ "\t" ++ intercalate "\t" val
+                     mapV =
+                       let vertices = nub $
+                                      edges >>= \x → case x of Edge a b → [a, b]
+                       in M.fromList $ map (\x → (x, x)) vertices
+                     stringify mp =
+                       let keyShow key val = key ++ "\t" ++ intercalate "\t" val
+                       in unlines . M.elems $ M.mapWithKey keyShow mp
