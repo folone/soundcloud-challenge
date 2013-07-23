@@ -12,8 +12,11 @@ class Stringify a where
 instance (Eq a) ⇒ Eq (Edge a) where
   Edge x1 y1 == Edge x2 y2 = x1 == x2 && y1 == y2
 
-instance (Show a) ⇒ Stringify ((a, [a])) where
-  stringify (key, val) = show key ++ "\t" ++ intercalate "\t" (map show val)
+instance Stringify String where
+  stringify = id
+
+instance Stringify ((String, [String])) where
+  stringify (key, val) = stringify key ++ "\t" ++ intercalate "\t" (map stringify val)
 
 nlevel = 2
 
