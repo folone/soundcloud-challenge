@@ -1,7 +1,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
-import Data.List
-import Data.List.Split
-import qualified Data.Map as M
+import           Data.List
+import           Data.List.Split
+import qualified Data.Map        as M
 
 data Edge a = Edge a a deriving Show
 
@@ -31,14 +31,13 @@ processGraph edges = stringify $ M.map (verticesWithin nlevel) mapV where
                        let adjacent = adjacencyMatrix M.! v
                            additional =
                              if n == 1 then []
-                             else adjacent >>= (verticesWithin (n - 1))
+                             else adjacent >>= verticesWithin (n - 1)
                        in nub $ adjacent ++ additional
                      adjacencyMatrix = M.map findAdjacent mapV
                      findAdjacent v = edges >>= \x →
-                       case x of Edge a b →
-                                   if a == v then [b]
-                                   else if b == v then [a]
-                                        else []
+                       case x of Edge a b | a == v    → [b]
+                                          | b == v    → [a]
+                                          | otherwise → []
                      mapV = M.fromList $ map (\x → (x, x)) vertices
                      stringify mp = unlines . M.elems $
                                     M.mapWithKey keyShow mp
