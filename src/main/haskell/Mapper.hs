@@ -24,7 +24,7 @@ calculate :: String → String
 calculate text = unlines . processGraph . convert . lines $ text
 
 convert :: [String] → [Edge String]
-convert xs = map convert' xs where
+convert = map convert' where
   convert' x = Edge (head (res x)) (res x !! 1)
   res        = splitOn "\t"
 
