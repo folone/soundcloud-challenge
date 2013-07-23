@@ -1,5 +1,5 @@
-{-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 import           Data.List
 import           Data.List.Split
 import qualified Data.Map        as M
@@ -13,7 +13,7 @@ instance (Eq a) ⇒ Eq (Edge a) where
   Edge x1 y1 == Edge x2 y2 = x1 == x2 && y1 == y2
 
 instance (Show a) ⇒ Stringify ((a, [a])) where
-  stringify (key, val) = (show key) ++ "\t" ++ (intercalate "\t" (map show val))
+  stringify (key, val) = show key ++ "\t" ++ intercalate "\t" (map show val)
 
 nlevel = 2
 
