@@ -9,9 +9,6 @@ data Edge a = Edge a a deriving Show
 class Stringify a where
   stringify :: a → String
 
-instance (Eq a) ⇒ Eq (Edge a) where
-  Edge x1 y1 == Edge x2 y2 = x1 == x2 && y1 == y2
-
 instance Stringify String where
   stringify = id
 
@@ -27,10 +24,8 @@ calculate :: String → String
 calculate text = unlines . processGraph . convert . lines $ text
 
 convert :: [String] → [Edge String]
-convert xs = xs >>= convert' where
-  convert' x =
-    [Edge (head (res x)) (res x !! 1),
-     Edge (head (res x)) (res x !! 1)]
+convert xs = map convert' xs where
+  convert' x = Edge (head (res x)) (res x !! 1)
   res        = splitOn "\t"
 
 processGraph :: [Edge String] → [String]
