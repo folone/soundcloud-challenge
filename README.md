@@ -30,11 +30,27 @@ $ ./sbt # the provided script will work if you don't have sbt installed
 
 I gave a shot at a MapReduce solution, using the Hadoop streaming
 API. Did it in Haskell. I haven't programmed any MapReduce jobs
-before, so not sure, if it is an ok solution. Basically, for
+before, so not sure, if it is an ok solution. ~~Basically, for
 each vertex mapper does a breadth first search to the required level,
 spitting out all the vertices it encountered on its way. The reducer then
 cleans up the list produced by the mapper, removes duplicates and does
-the sorting.
+the sorting.~~ The solution was not ok: it loaded the whole graph into
+each mapper. The new solution presents a one-step mapper and
+reducer. At each step mapper broadens frontier, adding one more level
+of reachable vertices. Reducer then cleans up the mess, produced by
+mapper, joining all the data per source vertex into one line. To get
+to the second level of friends, run mapper + reducer twice:
+
+```
+λ Alonzo_Church haskell → λ git master* → cat ~/workspace/soundcloud-challenge/misc/test.txt | ./MapperOneStep | ./ReducerOneStep | ./MapperOneStep | ./ReducerOneStep                                                                           
+brendan	kim	omid	torsten           
+davidbowie	kim	mick	omid	torsten	ziggy
+kim	brendan	davidbowie	omid	torsten	ziggy
+mick	davidbowie	ziggy
+omid	brendan	davidbowie	kim	torsten	ziggy
+torsten	brendan	davidbowie	kim	omid
+ziggy	davidbowie	kim	mick	omid
+```
 
 ## Logic-programming solution.
 
