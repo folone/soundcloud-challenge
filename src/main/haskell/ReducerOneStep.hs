@@ -21,4 +21,5 @@ process xs = map stringify . customGroup . pairs $ xs where
   stringify (y, ys) = y ++ "\t" ++ (intercalate "\t" . sort $ ys)
 
 customGroup :: (Eq a, Eq b, Ord a) ⇒ [(a, [b])] → [(a, [b])]
-customGroup = map (\l → (fst . head $ l, nub (l >>= snd))) . groupBy ((==) `on` fst) . sortBy (comparing fst)
+customGroup = map transform . groupBy ((==) `on` fst) . sortBy (comparing fst) where
+  transform xs = (fst . head $ xs, nub (xs >>= snd))
