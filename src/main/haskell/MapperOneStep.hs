@@ -12,10 +12,10 @@ calculate text = unlines . map stringify . convert . lines $ text where
 
 convert :: [String] → [[String]]
 convert xs = xs >>= convert' where
-  convert' x = let lst = splitOn "\t" x in cycleThrough lst
+  convert' = cycleThrough . splitOn "\t"
 
 cycleThrough :: [a] → [[a]]
 cycleThrough ys =
   let size = length ys
-      lst = cycle ys
+      lst  = cycle ys
   in map (\n → take size (drop n lst)) [0 .. size - 1]
