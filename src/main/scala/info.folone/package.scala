@@ -10,27 +10,19 @@ import syntax.std.boolean._
 import scala.collection.SortedMap
 
 // Let's bake a little cake
-package object soundcloud extends GraphModule
-                             with IOModule
-                             with TypeAliases {
+package object soundcloud extends GraphModule with IOModule with TypeAliases
+
+// Types and their typeclass instances
+trait TypeAliases { self: GraphModule ⇒
+  // Result datatype
+  type Result = SortedMap[Node, List[Node]]
+
   // Show typeclass instance for the result
   implicit val resShow = new Show[Result] {
     override def shows(res: Result) = res.map { case(name, friends) ⇒
       name + "\t" + friends.mkString("\t")
     }.mkString("\n")
   }
-
-  // Write results to screen (for debugging)
-  def dumpToScreen(res: Result): IO[Unit] = putStrLn(res.shows)
-
-  // Write results to file
-  def dumpToFile(res: Result, path: String): IO[Unit] =
-    toFile(path, res.shows)
-}
-
-trait TypeAliases { self: GraphModule ⇒
-  // Result datatype
-  type Result = SortedMap[Node, List[Node]]
 }
 
 // Poor man's graph library
@@ -69,5 +61,13 @@ trait IOModule { self: TypeAliases ⇒
 
   // Using structural types, which are implemented using reflection on JVM
   import scala.language.reflectiveCalls
+
   private def close(r: {def close(): Unit}) = IO { r.close() }
+
+  // Write results to screen (for debugging)
+  def dumpToScreen(res: Result): IO[Unit] = putStrLn(res.shows)
+
+  // Write results to file
+  def dumpToFile(res: Result, path: String): IO[Unit] =
+    toFile(path, res.shows)
 }
