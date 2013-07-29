@@ -36,8 +36,9 @@ trait GraphModule { self: TypeAliases ⇒
     val nodesWithin = Memo.immutableHashMapMemo[(Int, Node), Set[Node]](nodesWithinUnderlying)
     private def nodesWithinUnderlying(tuple: (Int, Node)): Set[Node] = {
       val (n, node) = tuple
-      val adjacent = adjacencyList(node)
+      val adjacent  = adjacencyList(node)
       adjacent ++ adjacent.flatMap { nd ⇒
+        // This is intentional, to fill the memo with initial data sooner
         if(n > 1) this.nodesWithin(n - 1, nd)
         else Nil
       }
