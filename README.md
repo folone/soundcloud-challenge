@@ -12,7 +12,9 @@ The problem is basically a depth-aware undirected graph traversal.
 After reading the data, we transform it to the adjacency matrix.
 We then perform a depth first search through the matrix for each
 vertex. Time complexity of one traversal is O(|E|). Since we're
-doing a traversal for each vertex, it is O(|E||V|).
+doing a traversal for each vertex, it is O(|E||V|). Also, since we're
+not traversing all the graph, but only to the required depth `d`, it
+is O(|V| * bᵈ), where `b` is the branching factor.
 We're using adjacency matrix, so space complexity is O(|V|²).
 
 Presented solution makes heavy use of effect control from scalaz
