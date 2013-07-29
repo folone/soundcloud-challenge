@@ -9,13 +9,13 @@ This solution consists of three approaches:
 ## An algorithmic solution.
 
 The problem is basically a depth-aware undirected graph traversal.
-After reading the data, we transform it to the adjacency matrix.
-We then perform a depth first search through the matrix for each
-vertex. Time complexity of one traversal is O(|E|). Since we're
-doing a traversal for each vertex, it is O(|E||V|). Also, since we're
+After reading the data, we transform it to the adjacency list.
+We then perform a depth first search through the graph for each
+vertex. Time complexity of one traversal is `O(|E|)`. Since we're
+doing a traversal for each vertex, it is `O(|E| * |V|)`. Also, since we're
 not traversing all the graph, but only to the required depth `d`, it
-is O(|V| * bᵈ), where `b` is the branching factor.
-We're using adjacency matrix, so space complexity is O(|V|²).
+is `O(|V| * bᵈ)`, where `b` is the branching factor.
+We're using adjacency list, so space complexity is `O(|V| + |E|)`.
 
 Presented solution makes heavy use of effect control from scalaz
 library. The package object, where all the interesting stuff is going
