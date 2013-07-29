@@ -37,22 +37,16 @@ trait GraphModule { self: TypeAliases ⇒
   case class Graph(adjacencyList: Map[Node, Set[Node]]) {
     lazy val nodes = adjacencyList.keys
 
-    private val memo = new scala.collection.mutable.HashMap[(Int, Node), Set[Node]]
     def nodesWithin(n: Int, node: Node) = nodesWithinUnderlying(n, node).run.toSet
     private def nodesWithinUnderlying(n: Int, node: Node): Trampoline[List[Node]] = {
       val adjacent  = adjacencyList(node).toList
       adjacent.map { nd ⇒
         for {
           res ← {
-            if(memo.contains((n - 1, nd))) done(memo((n - 1, nd)))
-            else if(n > 1) suspend(this.nodesWithinUnderlying(n - 1, nd))
+            if(n > 1) suspend(this.nodesWithinUnderlying(n - 1, nd))
             else done(Nil)
           }
-        } yield {
-          val result = adjacent ++ res
-          memo += ((n, nd) → result.toSet)
-          result
-        }
+        } yield adjacent ++ res
       }.sequenceU.map(_.flatten)
     }
 

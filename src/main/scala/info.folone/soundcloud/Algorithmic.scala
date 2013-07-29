@@ -25,9 +25,9 @@ object Algorithmic {
 
   // Generate map of n-level friends for each user
   def processGraph(graph: Graph, n: Int): Result = {
-    val res = graph.nodes.map { node ⇒
+    val res = graph.nodes.par.map { node ⇒
       node → graph.nodesWithin(n, node).toList.sorted.filterNot(_ == node)
-    }
+    }.seq
     SortedMap(res.toSeq:_*)
   }
 
