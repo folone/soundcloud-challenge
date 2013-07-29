@@ -4,8 +4,12 @@ import scalaz._
 import effect._
 import IO._ 
 import std.option._
+import std.list._
 import syntax.show._
+import syntax.traverse._
 import syntax.std.boolean._
+import Free.{suspend ⇒ _, _}
+import Trampoline._
 
 import scala.collection.SortedMap
 
@@ -33,15 +37,17 @@ trait GraphModule { self: TypeAliases ⇒
   case class Graph(adjacencyList: Map[Node, Set[Node]]) {
     lazy val nodes = adjacencyList.keys
 
-    val nodesWithin = Memo.immutableHashMapMemo[(Int, Node), Set[Node]](nodesWithinUnderlying)
-    private def nodesWithinUnderlying(tuple: (Int, Node)): Set[Node] = {
-      val (n, node) = tuple
-      val adjacent  = adjacencyList(node)
-      adjacent ++ adjacent.flatMap { nd ⇒
-        // This is intentional, to fill the memo with initial data sooner
-        if(n > 1) this.nodesWithin(n - 1, nd)
-        else Nil
-      }
+    def nodesWithin(n: Int, node: Node) = nodesWithinUnderlying(n, node).run.toSet
+    private def nodesWithinUnderlying(n: Int, node: Node): Trampoline[List[Node]] = {
+      val adjacent  = adjacencyList(node).toList
+      adjacent.map { nd ⇒
+        for {
+          res ← {
+            if(n > 1) suspend(this.nodesWithinUnderlying(n - 1, nd))
+            else done(Nil)
+          }
+        } yield adjacent ++ res
+      }.sequenceU.map(_.flatten)
     }
 
   }
