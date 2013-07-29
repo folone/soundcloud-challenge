@@ -3,16 +3,16 @@
 This solution consists of three approaches:
 
 1. An algorithmic Scala solution.
-2. Map-reduce Haskell solution.
+2. A map-reduce Haskell solution.
 3. A for-fun Prolog solution.
 
 ## An algorithmic solution.
 
 The problem is basically a depth-aware undirected graph traversal.
 After reading the data, we transform it to the adjacency matrix.
-We then perform a breadth first search through the matrix for each
-vertex. Time complexity of one traversal is O(|V| + |E|). Since we're
-doing a traversal for each vertex, it is O(|V|² + |E||V|).
+We then perform a depth first search through the matrix for each
+vertex. Time complexity of one traversal is O(|E|). Since we're
+doing a traversal for each vertex, it is O(|E||V|).
 We're using adjacency matrix, so space complexity is O(|V|²).
 
 Presented solution makes heavy use of effect control from scalaz

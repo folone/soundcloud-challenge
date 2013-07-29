@@ -27,7 +27,9 @@ trait TypeAliases { self: GraphModule ⇒
 
 // Poor man's graph library
 trait GraphModule { self: TypeAliases ⇒
+
   type Node = String
+
   case class Graph(adjacencyMatrix: Map[Node, Set[Node]]) {
     lazy val nodes = adjacencyMatrix.keys
 
@@ -38,11 +40,13 @@ trait GraphModule { self: TypeAliases ⇒
         else Nil
       }
     }
+
   }
 }
 
 // Poor man's IO library
 trait IOModule { self: TypeAliases ⇒
+
   import scala.io.Source
   import java.io.FileWriter
 
