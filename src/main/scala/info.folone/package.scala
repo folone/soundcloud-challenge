@@ -33,7 +33,9 @@ trait GraphModule { self: TypeAliases ⇒
   case class Graph(adjacencyMatrix: Map[Node, Set[Node]]) {
     lazy val nodes = adjacencyMatrix.keys
 
-    def nodesWithin(n: Int, node: Node): Set[Node] = {
+    val nodesWithin = Memo.immutableHashMapMemo[(Int, Node), Set[Node]](nodesWithinUnderlying)
+    private def nodesWithinUnderlying(tuple: (Int, Node)): Set[Node] = {
+      val (n, node) = tuple
       val adjacent = adjacencyMatrix(node)
       adjacent ++ adjacent.flatMap { nd ⇒
         if(n > 1) this.nodesWithin(n - 1, nd)
