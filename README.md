@@ -37,21 +37,26 @@ each vertex mapper does a breadth first search to the required level,
 spitting out all the vertices it encountered on its way. The reducer then
 cleans up the list produced by the mapper, removes duplicates and does
 the sorting.~~ The solution was not ok: it loaded the whole graph into
-each mapper. The new solution presents a one-step mapper and
-reducer. At each step mapper broadens frontier, adding one more level
-of reachable vertices. Reducer then cleans up the mess, produced by
-mapper, joining all the data per source vertex into one line. To get
-to the second level of friends, run mapper + reducer twice:
+each mapper. The new solution consists of three parts:
 
+1. Mapper + reducer to get an adjacency list from the input
+2. Mapper + reducer to broaden frontier by one step
+3. Final reducer which assembles the result
+
+The first iteration gets the adjacency list (i.e. solution for
+n=1). Each consecutive application of `MapperIterate` +
+`ReducerIterate` increases n by one. At the end the `ReducerFinal`
+assembles the result. For n=3:
 ```
-λ Alonzo_Church haskell → λ git master* → cat ~/workspace/soundcloud-challenge/misc/test.txt | ./MapperOneStep | ./ReducerOneStep | ./MapperOneStep | ./ReducerOneStep                                                                           
-brendan	kim	omid	torsten           
-davidbowie	kim	mick	omid	torsten	ziggy
-kim	brendan	davidbowie	omid	torsten	ziggy
-mick	davidbowie	ziggy
-omid	brendan	davidbowie	kim	torsten	ziggy
-torsten	brendan	davidbowie	kim	omid
-ziggy	davidbowie	kim	mick	omid
+λ Alan_Turing haskell → λ git master → cat ~/workspace/soundcloud/misc/test.txt | ./MapperAdjacencyList | ./ReducerAdjacencyList | ./MapperIterate | ./ReducerIterate | ./MapperIterate | ./ReducerIterate | ./ReducerFinal     
+brendan	davidbowie	kim	omid	torsten
+davidbowie	brendan	kim	mick	omid	torsten	ziggy
+kim	brendan	davidbowie	mick	omid	torsten	ziggy
+mick	davidbowie	kim	omid	ziggy
+omid	brendan	davidbowie	kim	mick	torsten	ziggy
+torsten	brendan	davidbowie	kim	omid	ziggy
+ziggy	davidbowie	kim	mick	omid	torsten
+
 ```
 
 ## Logic-programming solution.
