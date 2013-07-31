@@ -1,7 +1,7 @@
-{-# LANGUAGE UnicodeSyntax     #-}
-import Data.List
+{-# LANGUAGE UnicodeSyntax #-}
+import           Data.List
 
-import Util
+import           Util
 
 main :: IO ()
 main = interact calculate

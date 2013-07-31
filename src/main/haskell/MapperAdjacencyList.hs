@@ -1,8 +1,8 @@
-{-# LANGUAGE UnicodeSyntax     #-}
+{-# LANGUAGE UnicodeSyntax #-}
 import           Data.List
 import           Data.List.Split
 
-import Util
+import           Util
 
 main :: IO ()
 main = interact calculate

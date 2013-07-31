@@ -1,5 +1,5 @@
-{-# LANGUAGE UnicodeSyntax     #-}
-import Util
+{-# LANGUAGE UnicodeSyntax #-}
+import           Util
 
 main :: IO ()
 main = interact calculate
