@@ -1,22 +1,22 @@
 {-# LANGUAGE UnicodeSyntax #-}
 module Util where
-import Data.List
-import           Data.List.Split
+
 import           Data.Function
+import           Data.List
+import           Data.List.Split
 import           Data.Ord
+
 
 parsePair :: String → (String, [String])
 parsePair str =
     let lst = splitOn "\t" str
     in (head lst, tail lst)
 
-
 parseTriple :: String → (String, [String], [String])
 parseTriple str =
     let (h, adj:t) = parsePair str
         adjLst = splitOn "," . init . tail $ adj
     in (h, adjLst, t)
-
 
 stringifyPair :: (String, [String]) → String
 stringifyPair (y, ys) = y ++ "\t" ++ "["
@@ -39,11 +39,11 @@ cycleThrough ys =
       lst  = cycle ys
   in map (\n → take size (drop n lst)) [0 .. size - 1]
 
--- A lot of duplication here
 customGroupPairs :: (Eq a, Eq b, Ord a) ⇒ [(a, [b])] → [(a, [b])]
-customGroupPairs = map transform . groupBy ((==) `on` fst)
-                   . sortBy (comparing fst) where
-  transform xs = (fst . head $ xs, nub (xs >>= snd))
+customGroupPairs = map toTuple . customGroupTriples . map toTriple where
+  toTriple (a, bs)    = (a, bs, [])
+  toTuple (a, bs, []) = (a, bs)
+  toTuple (a, bs, cs) = (a, bs ++ cs) -- should not get here, still let's be safe
 
 customGroupTriples :: (Eq a, Eq b, Eq c, Ord a) ⇒
                      [(a, [b], [c])] → [(a, [b], [c])]
