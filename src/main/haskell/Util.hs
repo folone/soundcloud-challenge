@@ -13,7 +13,7 @@ parsePair str =
 
 parseTriple :: String → (String, [String], [String])
 parseTriple str =
-    let h:adj:t = splitOn "\t" str
+    let (h, adj:t) = parsePair str
         adjLst = splitOn "," . init . tail $ adj
     in (h, adjLst, t)
 
@@ -23,7 +23,7 @@ stringifyPair (y, ys) = y ++ "\t" ++ "["
                         ++ (intercalate "," . sort $ ys) ++ "]"
 
 stringifyTriple :: (String, [String], [String]) → String
-stringifyTriple (y, ys, []) = stringifyPair (y, ys)
+stringifyTriple (y, ys, [])  = stringifyPair (y, ys)
 stringifyTriple (y, ys, yys) = stringifyPair (y, ys)
                                ++ "\t" ++ (intercalate "\t" yys)
 
@@ -39,6 +39,7 @@ cycleThrough ys =
       lst  = cycle ys
   in map (\n → take size (drop n lst)) [0 .. size - 1]
 
+-- A lot of duplication here
 customGroupPairs :: (Eq a, Eq b, Ord a) ⇒ [(a, [b])] → [(a, [b])]
 customGroupPairs = map transform . groupBy ((==) `on` fst)
                    . sortBy (comparing fst) where

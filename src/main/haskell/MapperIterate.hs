@@ -1,6 +1,4 @@
 {-# LANGUAGE UnicodeSyntax #-}
-import           Data.List
-
 import           Util
 
 main :: IO ()
@@ -11,6 +9,6 @@ calculate = unlines . (>>= process) . lines
 
 process :: String → [String]
 process xs =
-  let (h, adjLst, t) = parseTriple xs
+  let (h, adjLst, t)   = parseTriple xs
       stringify (y:ys) = stringifyTriple (y, [h], ys ++ t)
   in map stringify (cycleThrough adjLst)

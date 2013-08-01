@@ -1,7 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 import           Data.List
 import           Data.List.Split
-
 import           Util
 
 main :: IO ()
