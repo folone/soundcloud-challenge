@@ -4,7 +4,7 @@ This solution consists of three approaches:
 
 1. An algorithmic Scala solution.
 2. A map-reduce Haskell solution.
-3. A for-fun Prolog solution.
+3. A for-fun Prolog [semi-]solution.
 
 ## An algorithmic solution.
 
@@ -107,3 +107,20 @@ implicit vals/typeclass instances depending on them presents us with
 most of Prolog's instruments, and the process of implicit/typeclass
 resolution is actually the famous [unification](http://en.wikipedia.org/wiki/Unification_(computer_science)) process.
 This approach is exposed in Miles Sabin's [shapeless](https://github.com/milessabin/shapeless/) library.
+
+## Comparing results
+There is a very simple facility to compare the results of the first two algorithms:
+
+```
+λ Alonzo_Church soundcloud-challenge → λ git master* → ./compare-algos.sh 10                                                  ~/workspace/soundcloud-challenge
+Running for N=1...Output is the same
+Running for N=2...Output is the same
+Running for N=3...Output is the same
+Running for N=4...Output is the same
+Running for N=5...Output is the same
+Running for N=6...Output is the same
+Running for N=7...Output is the same
+Running for N=8...Output is the same
+Running for N=9...Output is the same
+Running for N=10...Output is the same
+```
