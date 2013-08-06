@@ -12,15 +12,13 @@ import Free.{suspend ⇒ _, _}
 import Trampoline._
 import Isomorphism._
 
-import scala.collection.SortedMap
-
 // Let's bake a little cake
 package object soundcloud extends GraphModule with IOModule with TypeAliases
 
 // Types and their typeclass instances
 trait TypeAliases { self: GraphModule ⇒
   // Result datatype
-  type Result = SortedMap[Node, List[Node]]
+  type Result = scala.collection.SortedMap[Node, List[Node]]
 
   // Show typeclass instance for the result
   implicit val resShow = new Show[Result] {
@@ -50,13 +48,10 @@ trait GraphModule { self: TypeAliases ⇒
 
     def nodesWithin(n: Int, node: Node) = nodesWithinUnderlying(n, node).run.toSet
     private def nodesWithinUnderlying(n: Int, node: Node): Trampoline[Set[Node]] = {
-      val adjacent  = adjacencyList(node)
+      val adjacent = adjacencyList(node)
       adjacent.map { nd ⇒
         for {
-          res ← {
-            if(n > 1) suspend(this.nodesWithinUnderlying(n - 1, nd))
-            else done(Set())
-          }
+          res ← (n > 1) ? suspend(this.nodesWithinUnderlying(n - 1, nd)) | done(Set())
         } yield adjacent ++ res
       }.sequenceU.map(_.flatten)
     }
@@ -66,7 +61,6 @@ trait GraphModule { self: TypeAliases ⇒
 
 // Poor man's IO library
 trait IOModule { self: TypeAliases ⇒
-
   import scala.io.Source
   import java.io.FileWriter
 
@@ -92,6 +86,6 @@ trait IOModule { self: TypeAliases ⇒
   def dumpToScreen(res: Result): IO[Unit] = putStrLn(res.shows)
 
   // Write results to file
-  def dumpToFile(res: Result, path: String): IO[Unit] =
+  def dumpToFile(path: String)(res: Result): IO[Unit] =
     toFile(path, res.shows)
 }
