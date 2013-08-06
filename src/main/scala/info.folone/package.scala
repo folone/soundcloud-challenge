@@ -10,6 +10,7 @@ import syntax.traverse._
 import syntax.std.boolean._
 import Free.{suspend ⇒ _, _}
 import Trampoline._
+import Isomorphism._
 
 import scala.collection.SortedMap
 
@@ -27,6 +28,16 @@ trait TypeAliases { self: GraphModule ⇒
       name + "\t" + friends.mkString("\t")
     }.mkString("\n")
   }
+
+  // This instance is not lawfull, but it is pretty convenient here
+  implicit val isoTraverse: IsomorphismTraverse[Set, List] =
+    new IsomorphismTraverse[Set, List] {
+      def G = Traverse[List]
+      def iso = new IsoFunctorTemplate[Set, List] {
+        def to[A](sa: Set[A]): List[A]   = sa.toList
+        def from[A](la: List[A]): Set[A] = la.toSet
+      }
+    }
 }
 
 // Poor man's graph library
@@ -38,13 +49,13 @@ trait GraphModule { self: TypeAliases ⇒
     lazy val nodes = adjacencyList.keys
 
     def nodesWithin(n: Int, node: Node) = nodesWithinUnderlying(n, node).run.toSet
-    private def nodesWithinUnderlying(n: Int, node: Node): Trampoline[List[Node]] = {
-      val adjacent  = adjacencyList(node).toList
+    private def nodesWithinUnderlying(n: Int, node: Node): Trampoline[Set[Node]] = {
+      val adjacent  = adjacencyList(node)
       adjacent.map { nd ⇒
         for {
           res ← {
             if(n > 1) suspend(this.nodesWithinUnderlying(n - 1, nd))
-            else done(Nil)
+            else done(Set())
           }
         } yield adjacent ++ res
       }.sequenceU.map(_.flatten)
