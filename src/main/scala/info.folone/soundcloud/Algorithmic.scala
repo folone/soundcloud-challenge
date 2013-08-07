@@ -30,7 +30,8 @@ object Algorithmic {
 
   def mainIO(path: String, n: Int, toFile: String): IO[Unit] = for {
     lines ← lines(path)
-  } yield generateGraphFrom(lines) |> processGraph(n) |> dumpToFile(toFile)
+    res   ← generateGraphFrom(lines) |> processGraph(n) |> dumpToFile(toFile)
+  } yield res
 
   def main(args: Array[String]) = {
     val path   = args(0)

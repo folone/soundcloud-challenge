@@ -65,10 +65,10 @@ trait IOModule { self: TypeAliases ⇒
   import java.io.FileWriter
 
   // write to file
-  def toFile(path: String, data: String) =
-    IO(new FileWriter(path))
+  def toFile(path: String, text: String) =
+    IO(new FileWriter(path, false))
       .bracket(close) { fw ⇒
-      IO(fw.write(data))
+      IO(fw.write(text))
     }
 
   // read lines from file

@@ -113,14 +113,14 @@ There is a very simple facility to compare the results of the first two algorith
 
 ```
 λ Alonzo_Church soundcloud-challenge → λ git master* → ./compare-algos.sh 10                                                  ~/workspace/soundcloud-challenge
-Running for N=1...Output is the same
-Running for N=2...Output is the same
-Running for N=3...Output is the same
-Running for N=4...Output is the same
-Running for N=5...Output is the same
-Running for N=6...Output is the same
-Running for N=7...Output is the same
-Running for N=8...Output is the same
-Running for N=9...Output is the same
-Running for N=10...Output is the same
+Running for N=1...	Output is the same
+Running for N=2...	Output is the same
+Running for N=3...	Output is the same
+Running for N=4...	Output is the same
+Running for N=5...	Output is the same
+Running for N=6...	Output is the same
+Running for N=7...	Output is the same
+Running for N=8...	Output is the same
+Running for N=9...	Output is the same
+Running for N=10...	Output is the same
 ```

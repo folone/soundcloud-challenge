@@ -1,7 +1,7 @@
 #! /bin/sh
 for i in $(seq 1 $1);
 do
-    echo -e -n "\033[00;33mRunning for N=$i...\033[0m"
+    echo -e -n "\033[00;33mRunning for N=$i...\033[0m\t"
     ./sbt "run misc/test.txt "$i" /tmp/testres1.txt" 2>&1 >/dev/null;
     cmd="cat misc/test.txt | ./src/main/haskell/MapperAdjacencyList | ./src/main/haskell/ReducerAdjacencyList | "
     if [ $i -gt 1 ]
