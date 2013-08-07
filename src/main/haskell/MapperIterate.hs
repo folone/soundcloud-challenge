@@ -9,6 +9,7 @@ calculate = unlines . (>>= process) . lines
 
 process :: String → [String]
 process xs =
-  let (h, adjLst, t)   = parseTriple xs
-      stringify (y:ys) = stringifyTriple (y, [h], ys ++ t)
-  in map stringify (cycleThrough adjLst)
+  let (h, adjLst, t)     = parse xs :: (String, [String], [String])
+      myStringify (y:ys) = stringify (y, [h], ys ++ t)
+      myStringify []     = "" -- being total
+  in map myStringify (cycleThrough adjLst)

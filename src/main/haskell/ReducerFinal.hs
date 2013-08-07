@@ -8,4 +8,4 @@ calculate :: String → String
 calculate = unlines . reduce . lines
 
 reduce :: [String] → [String]
-reduce = map (finalStringify . parseTriple)
+reduce = map (finalStringify . parse)

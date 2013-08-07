@@ -1,4 +1,5 @@
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 module Util where
 
 import           Data.Function
@@ -6,6 +7,17 @@ import           Data.List
 import           Data.List.Split
 import           Data.Ord
 
+class StringifyParse a where
+  stringify :: a → String
+  parse :: String → a
+
+instance StringifyParse (String, [String]) where
+  stringify = stringifyPair
+  parse = parsePair
+
+instance StringifyParse (String, [String], [String]) where
+  stringify = stringifyTriple
+  parse = parseTriple
 
 parsePair :: String → (String, [String])
 parsePair str =

@@ -8,4 +8,4 @@ calculate :: String → String
 calculate = unlines . process . lines
 
 process :: [String] → [String]
-process = map stringifyPair . customGroupPairs . map parsePair
+process = map stringify . customGroupPairs . map (parse :: String → (String, [String]))
