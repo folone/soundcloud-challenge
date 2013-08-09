@@ -1,4 +1,5 @@
 {-# LANGUAGE UnicodeSyntax #-}
+import           Data.List
 import           Util
 
 main :: IO ()
@@ -8,4 +9,8 @@ calculate :: String → String
 calculate = unlines . reduce . lines
 
 reduce :: [String] → [String]
-reduce = map (finalStringify . parse)
+reduce = map (stringify . parse) where
+  stringify (y, ys, yys) =
+    let lst = ys ++ yys
+        sorted = sort . nub $ lst
+    in y ++ "\t" ++ intercalate "\t" sorted

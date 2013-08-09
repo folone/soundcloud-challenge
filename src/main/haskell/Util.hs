@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UnicodeSyntax     #-}
-module Util (stringify, parse, group, cycleThrough, finalStringify) where
+module Util (stringify, parse, group, cycleThrough) where
 
 import           Data.Function
 import           Data.List hiding (group)
@@ -41,12 +41,6 @@ stringifyTriple :: (String, [String], [String]) → String
 stringifyTriple (y, ys, [])  = stringifyPair (y, ys)
 stringifyTriple (y, ys, yys) = stringifyPair (y, ys)
                                ++ "\t" ++ intercalate "\t" yys
-
-finalStringify :: (String, [String], [String]) → String
-finalStringify (y, ys, yys) =
-  let lst = ys ++ yys
-      sorted = sort . nub $ lst
-  in y ++ "\t" ++ intercalate "\t" sorted
 
 cycleThrough :: [a] → [[a]]
 cycleThrough ys =
