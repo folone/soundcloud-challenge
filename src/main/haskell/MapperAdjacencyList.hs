@@ -1,7 +1,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 import           Data.List
 import           Data.List.Split
-import           Util hiding (stringify)
+import           Util            hiding (stringify)
 
 main :: IO ()
 main = interact calculate

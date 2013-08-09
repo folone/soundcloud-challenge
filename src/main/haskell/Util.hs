@@ -3,7 +3,7 @@
 module Util (stringify, parse, group, cycleThrough) where
 
 import           Data.Function
-import           Data.List hiding (group)
+import           Data.List       hiding (group)
 import           Data.List.Split
 import           Data.Ord
 
