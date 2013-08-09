@@ -1,26 +1,26 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UnicodeSyntax     #-}
-module Util where
+module Util (stringify, parse, group, cycleThrough, finalStringify) where
 
 import           Data.Function
-import           Data.List
+import           Data.List hiding (group)
 import           Data.List.Split
 import           Data.Ord
 
 class StringifyParseGroup a where
   stringify :: a → String
-  parse :: String → a
-  group :: [a] → [a]
+  parse     :: String → a
+  group     :: [a] → [a]
 
 instance StringifyParseGroup (String, [String]) where
   stringify = stringifyPair
-  parse = parsePair
-  group = customGroupPairs
+  parse     = parsePair
+  group     = customGroupPairs
 
 instance StringifyParseGroup (String, [String], [String]) where
   stringify = stringifyTriple
-  parse = parseTriple
-  group = customGroupTriples
+  parse     = parseTriple
+  group     = customGroupTriples
 
 parsePair :: String → (String, [String])
 parsePair str =
@@ -40,13 +40,13 @@ stringifyPair (y, ys) = y ++ "\t" ++ "["
 stringifyTriple :: (String, [String], [String]) → String
 stringifyTriple (y, ys, [])  = stringifyPair (y, ys)
 stringifyTriple (y, ys, yys) = stringifyPair (y, ys)
-                               ++ "\t" ++ (intercalate "\t" yys)
+                               ++ "\t" ++ intercalate "\t" yys
 
 finalStringify :: (String, [String], [String]) → String
 finalStringify (y, ys, yys) =
   let lst = ys ++ yys
       sorted = sort . nub $ lst
-  in y ++ "\t" ++ (intercalate "\t" sorted)
+  in y ++ "\t" ++ intercalate "\t" sorted
 
 cycleThrough :: [a] → [[a]]
 cycleThrough ys =
