@@ -7,17 +7,20 @@ import           Data.List
 import           Data.List.Split
 import           Data.Ord
 
-class StringifyParse a where
+class StringifyParseGroup a where
   stringify :: a → String
   parse :: String → a
+  group :: [a] → [a]
 
-instance StringifyParse (String, [String]) where
+instance StringifyParseGroup (String, [String]) where
   stringify = stringifyPair
   parse = parsePair
+  group = customGroupPairs
 
-instance StringifyParse (String, [String], [String]) where
+instance StringifyParseGroup (String, [String], [String]) where
   stringify = stringifyTriple
   parse = parseTriple
+  group = customGroupTriples
 
 parsePair :: String → (String, [String])
 parsePair str =
