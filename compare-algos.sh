@@ -18,5 +18,6 @@ do
     else
         echo -e "\033[00;31mOutput differs!\033[0m"
         diff /tmp/testres1.txt /tmp/testres2.txt
+        exit 1
     fi
 done
