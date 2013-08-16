@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 for i in $(seq 1 $1);
 do
     echo -e -n "\033[00;33mRunning for N=$i...\033[0m\t"
@@ -10,8 +10,11 @@ do
         for k in $(seq 1 $x); do
             cmd+="./src/main/haskell/MapperIterate | ./src/main/haskell/ReducerIterate | "
         done;
+
     fi
-    cmd+="./src/main/haskell/ReducerFinal > /tmp/testres2.txt"
+
+    cmd+="./src/main/haskell/ReducerFinal > /tmp/testres2.txt";
+
     eval $cmd;
     if `comm -3 /tmp/testres1.txt /tmp/testres2.txt > /dev/null` ; then
         echo -e "\033[00;32mOutput is the same\033[0m"
