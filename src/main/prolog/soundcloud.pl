@@ -24,7 +24,4 @@ path(X, Y, [X|P], Visited, A) :- friend(X, Z),
                                  A is A1 + 1.
 
 % now to find all pathes of length 2:
-% findall((X, Path), path(X, Y, Path, 2), List).
-
-sorted(Res) :- keysort(Lst, Res), findall((X, Path), path(X, Y, Path, 2), Lst).
-
+result(List) :- findall((X, Path), path(X, Y, Path, 2), List).

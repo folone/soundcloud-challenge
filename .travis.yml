@@ -2,9 +2,11 @@ language: scala
 scala: 2.10.2
 before_install:
 - sudo apt-get update
-- sudo apt-get install cabal-install
+- sudo apt-get install cabal-install swi-prolog
 install:
 - cabal install
+- swipl -c src/main/prolog/soundcloud.pl
+- sbt compile
 before_script: touch /tmp/testres1.txt /tmp/testres2.txt
-script: ./compare-algos.sh 10
-
+script:
+- ./compare-algos.sh 10

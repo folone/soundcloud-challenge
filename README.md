@@ -1,5 +1,7 @@
 # SoundCloud data challenge solution
 
+[![Build Status](https://travis-ci.org/folone/soundcloud-challenge.png?branch=master)](https://travis-ci.org/folone/soundcloud-challenge)
+
 This solution consists of three approaches:
 
 1. An algorithmic Scala solution.
@@ -124,4 +126,3 @@ Running for N=8...	Output is the same
 Running for N=9...	Output is the same
 Running for N=10...	Output is the same
 ```
-[![Build Status](https://travis-ci.org/folone/soundcloud-challenge.png?branch=master)](https://travis-ci.org/folone/soundcloud-challenge)
