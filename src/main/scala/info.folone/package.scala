@@ -43,11 +43,11 @@ trait GraphModule { self: TypeAliases ⇒
 
   type Node = String
 
-  case class Graph(adjacencyList: Map[Node, Set[Node]]) {
+  case class Graph[A](adjacencyList: Map[A, Set[A]]) {
     lazy val nodes = adjacencyList.keys
 
-    def nodesWithin(n: Int, node: Node) = nodesWithinUnderlying(n, node).run.toSet
-    private def nodesWithinUnderlying(n: Int, node: Node): Trampoline[Set[Node]] = {
+    def nodesWithin(n: Int, node: A) = nodesWithinUnderlying(n, node).run.toSet
+    private def nodesWithinUnderlying(n: Int, node: A): Trampoline[Set[A]] = {
       val adjacent = adjacencyList(node)
       adjacent.map { nd ⇒
         for {

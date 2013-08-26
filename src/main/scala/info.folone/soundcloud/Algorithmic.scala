@@ -11,7 +11,7 @@ import syntax.id._
 object Algorithmic {
 
   // generate graph from lines
-  def generateGraphFrom(lines: List[String]): Graph = {
+  def generateGraphFrom(lines: List[String]): Graph[Node] = {
     val res = for {
       line ← lines
       pair = line.split("\\t")
@@ -21,7 +21,7 @@ object Algorithmic {
   }
 
   // Generate map of n-level friends for each user
-  def processGraph(n: Int)(graph: Graph): Result = {
+  def processGraph(n: Int)(graph: Graph[Node]): Result = {
     val res = graph.nodes.par.map { node ⇒
       node → graph.nodesWithin(n, node).toList.sorted.filterNot(_ == node)
     }.seq.toSeq
