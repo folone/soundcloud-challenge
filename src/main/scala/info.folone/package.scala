@@ -36,6 +36,12 @@ trait TypeAliases { self: GraphModule ⇒
         def from[A](la: List[A]): Set[A] = la.toSet
       }
     }
+
+  implicit val graphInstances = new Functor[Graph] {
+    def map[A, B](fa: Graph[A])(f: A ⇒ B) = Graph(fa.adjacencyList.map { case(k, v) ⇒
+      f(k) → v.map(f)
+    })
+  }
 }
 
 // Poor man's graph library
